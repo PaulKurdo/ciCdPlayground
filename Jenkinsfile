@@ -17,6 +17,28 @@ pipeline {
             }
         }
 
+        stage('test:unit') {
+            steps {
+                sh 'yarn test'
+            }
+            post {
+                always {
+                    junit testResults: 'reports/jest-junit.xml', allowEmptyResults: true
+                }
+            }
+        }
+
+        stage('test:e2e') {
+            steps {
+                sh 'yarn test:e2e'
+            }
+            post {
+                always {
+                    junit testResults: 'reports/cypress-junit.xml', allowEmptyResults: true
+                }
+            }
+        }
+
         stage('deploy') {
             steps {
                 s3Upload consoleLogLevel: 'INFO', 
