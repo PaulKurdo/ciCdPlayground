@@ -17,25 +17,15 @@ pipeline {
             }
         }
 
-        stage('test:unit') {
+        stage('unit-test') {
             steps {
                 sh 'yarn test'
             }
-            post {
-                always {
-                    junit testResults: 'reports/jest-junit.xml', allowEmptyResults: true
-                }
-            }
         }
 
-        stage('test:e2e') {
+        stage('e2e-test') {
             steps {
                 sh 'yarn test:e2e'
-            }
-            post {
-                always {
-                    junit testResults: 'reports/cypress-junit.xml', allowEmptyResults: true
-                }
             }
         }
 
