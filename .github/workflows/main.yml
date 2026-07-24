@@ -30,3 +30,11 @@ jobs:
       run: yarn build
     - name: Integration tests
       run: yarn test:e2e
+    - name: Publish Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Test Results
+        path: '**/reports/**/*.xml'
+        reporter: java-junit
+        fail-on-error: false
